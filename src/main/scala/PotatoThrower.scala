@@ -8,7 +8,7 @@ class PotatoThrower extends Actor {
     case Prepare(nextTarget) =>
         next = nextTarget
     case Start(number) =>
-        println("Counting down from " + number + "... " + self.path.name + " throws first!")
+        println("Counting down from " + number + "... \t" + self.path.name + " throws first!")
         Thread.sleep(500)
         next ! Catch(number)
     case Catch(number) =>
@@ -16,6 +16,7 @@ class PotatoThrower extends Actor {
             println(self.path.name + " caught the potato and it exploded.")
             println(self.path.name + " loses :(")
             println("game over")
+            context.system.terminate
         }
         else {
             println(self.path.name + " caught the potato! \tStill " + (number-1) + " throws left.")
